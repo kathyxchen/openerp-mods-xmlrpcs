@@ -34,17 +34,15 @@ res_partner()
 
 class res_partner_payarch(osv.osv):
     _name='res.partner.payarch'
-    _description='test'
-    _order="DATE_PART('YEAR',date)"
-    #_order='year desc'
+    _description='payment archive'
+    _order='date desc'
     _columns={
-        #'year': fields.integer('YYYY', help='Year Received'),
-        #'month': fields.integer('MM', help='Month Received'),
-        #'day': fields.integer('DD', help='Day Received'),
         'date': fields.date('Date Received'),
-        'po_num': fields.integer('PO #'),
-        'invoice': fields.integer('Invoice #'),
-        'description': fields.char('Description', size=128),
+        'po_num': fields.char('PO #', size=200),
+        'invoice': fields.char('Invoice #', size=200),
+        'inv_date' : fields.date('Invoice Date'),
+        'mo_date' : fields.date('M/O Date'),
+        'description': fields.char('Description', size=1000),
         'balance': fields.integer('Balance ($)'),
         'partner_id': fields.many2one('res.partner', 'Partner', required=True, ondelete='cascade'),
     }
