@@ -37,7 +37,7 @@ class res_partner_payarch(osv.osv):
     _description='payment archive'
     _order='date desc'
     _columns={
-        'date': fields.date('Date Received'),
+        'date_rec': fields.date('Date Received'),
         'po_num': fields.char('PO #', size=200),
         'invoice': fields.char('Invoice #', size=200),
         'inv_date' : fields.date('Invoice Date'),

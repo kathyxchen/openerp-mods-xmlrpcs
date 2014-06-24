@@ -26,7 +26,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Customer Payment Archive">
-                    <field name="date"/>
+                    <field name="date_rec"/>
                     <separator colspan="4" string="Tracking Information"/>
                     <field name="po_num"/>
                     <field name="invoice"/>
@@ -45,7 +45,7 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Customer Payment Archive" editable="top">
-                    <field name="date"/>
+                    <field name="date_rec"/>
                     <field name="mo_date"/>
                     <field name="po_num"/>
                     <field name="inv_date"/>

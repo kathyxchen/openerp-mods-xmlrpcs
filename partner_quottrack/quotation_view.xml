@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <menuitem id="menu_quotation_arch" name="Quotations" parent="base.menu_base_partner" sequence="7"/>
+        
+        <record id="view_partner_quot_filter" model="ir.ui.view">
+            <field name="name">quot.select</field>
+            <field name="model">quotation.file</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Partner">
+                    <group>
+                        <field name="partner_id" string="Partner"/>
+                        <field name="name" string="Quotation #" />
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                       <filter string="Partner" icon="terp-personal" domain="[]" context="{'group_by' : 'partner_id'}" />
+                       <filter string="Type" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by' : 'quot_type'}" />
+                   </group>
+                 </search>
+            </field>
+        </record>
+
+        <record id="view_partner_quot_tree" model="ir.ui.view">
+            <field name="name">quot.tree</field>
+            <field name="model">quotation.file</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Partner Quotations">
+                    <field name="partner_id"/>
+                    <field name="name"/>
+                    <field name="attach"/>
+                    <field name="quot_type"/>
+                    <field name="date_iss"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_partner_quot_tree" model="ir.actions.act_window">
+            <field name="name">Partner Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">quotation.file</field>
+            <field name="view_type">tree</field>
+            <field name="view_id" ref="view_partner_quot_tree"/>
+        </record>
+        
+        <record id="view_partner_quot_form1" model="ir.ui.view">
+            <field name="name">quot.form1</field>
+            <field name="model">quotation.file</field>
+            <field name="type">form</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="Quotation">
+                    <group colspan="4" col="6">
+                        <field name="partner_id" colspan="2"/>
+                        <newline />
+                        <separator colspan="4" string="Quotation Information"/>
+                        <newline />
+                        <field name="name"/>
+                        <field name="attach"/>
+                        <newline />
+                        <field name="quot_type"/>
+                        <field name="date_iss"/>
+                        <newline />
+                        <separator colspan="4"/>
+                        <newline />
+                        <field name="file"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_partner_quot_form" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">quotation.file</field>
+            <field name="view_type">form</field>
+            <field name="context">{"search_default_customer":1}</field>
+            <field name="search_view_id" ref="view_partner_quot_filter"/>
+        </record>
+
+        <record id="action_partner_quot_form_view1" model="ir.actions.act_window.view">
+            <field eval="10" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_partner_quot_tree"/>
+            <field name="act_window_id" ref="action_partner_quot_form"/>
+        </record>
+
+        <record id="action_partner_quot_form_view2" model="ir.actions.act_window.view">
+            <field eval="20" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_partner_quot_form1"/>
+            <field name="act_window_id" ref="action_partner_quot_form"/>
+        </record>
+        
+        <menuitem action="action_partner_quot_form" id="menu_partner_quot_form" groups="base.group_extended"
+            parent="menu_quotation_arch" sequence="30"/>
+
+        <record id="view_partner_quot" model="ir.ui.view">
+            <field name="name">res.partner.quot.form</field>
+            <field name="model">res.partner</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Quotation Archive">
+                        <field colspan="4" name="quotation_id" nolabel="1"/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="view_sales_quot" model="ir.ui.view">
+            <field name="name">sales.quot.form</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="project_id" position="after">
+                    <field domain="[('partner_id','=',partner_id)]" name="partner_quote_no" groups="base.group_extended"/> 
+                </field>
+            </field>
+        </record>
+
+        <!--<record id="view_sales_quot_filter" model="ir.ui.view">
+            <field name="name">sales.quot.select</field>
+            <field name="model">sale.order.list.select</field>
+            <field name="type">search</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="partner_quote_no" select="1"/>
+                </field>
+            </field>
+        </record>-->
+
+    </data>
+</openerp>

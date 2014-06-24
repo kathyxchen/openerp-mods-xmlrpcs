@@ -21,28 +21,32 @@
 
 from osv import fields, osv
 import pooler
+import time
 
 class sale_order(osv.osv):
-    _name='sale.order'
     _inherit='sale.order'
+    _name='sale.order'
     _description='Sales Order'
     _columns={
-        'partner_quote_no': fields.many2one('Quotation #', readonly=True, states={'draft': [('readonly', False)]}),
+        'partner_quote_no': fields.many2one('quotation.file', 'Quotation #', readonly=True, states={'draft': [('readonly', False)]}),
     }
 
 sale_order()
 
 class quotation_file(osv.osv):
     _name='quotation.file' 
-    #_inherit='ir_attachment'
     _description='quotation module'
-    _order='partner_id'
+    _order='partner_id, date_iss desc, quot_type'
     _columns={
-        'partner_id': fields.many2one('res.partner', 'Customer', readonly=True, states={'draft': [('readonly', False)]}, required=True, change_default=True, select=True),
-        'quote_no': fields.char('Quotation #', size=200, required=True),
+        'partner_id': fields.many2one('res.partner', 'Partner Name', ondelete='set null', select=True, required=True),
+        'name': fields.char('Quotation #', size=200, required=True),
         'attach': fields.boolean('(Quotation Attached?)', help='See sidebar on the right for the attached quotation.'),
-        'file': fields.binary('Quotation', help='Note this may only work on client, not web'),
-        'date': fields.date('Date'),
+        'file': fields.binary('Quotation', help='Note this ONLY works on client, not web'),
+        'date_iss': fields.date('Date'),
+        'quot_type' : fields.selection([('rec','Received'),('sent', 'Sent')], 'Type', required=True, help='Was this quotation sent or received by AAG?'),
+    }
+    _defaults={
+        'date_iss': time.strftime('%Y-%m-%d'),
     }
 
 quotation_file()
@@ -56,5 +60,7 @@ class res_partner(osv.osv):
     }
 
 res_partner()
+
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
