@@ -18,18 +18,15 @@
 #
 ##############################################################################
 {
-    "name" : "Partner Payment History",
-    "version" : "4.0",
-    "author" : "AAG",
-    "category" : "Custom Module",
-    "depends" : ["base"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "description": 'Used to store records prior to transition to OpenERP',
-    "update_xml" : ["partner_payment_view.xml"],
-    "active": False,
-    "installable": True,
-    "certificate": '',
+    'name' : 'Partner Payment History',
+    'version' : '4.0',
+    'author' : 'AAG',
+    'category' : 'Custom Module',
+    'description' : """ Store customer payment archives """,
+    'depends' : ['base'],
+    'data' : ['partner_payment_view.xml'],
+    'installable': True,
+    'auto_install': False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

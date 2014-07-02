@@ -23,13 +23,10 @@
     "author" : "AAG",
     "category" : "Custom Module",
     "depends" : ["base", "sale"],
-    "init_xml" : [],
-    "demo_xml" : [],
     "description": 'Used to relate quotations with customers.',
-    "update_xml" : ["quotation_view.xml"],
-    "active": False,
+    "data" : ["quotation_view.xml"],
     "installable": True,
-    "certificate": '',
+    "auto_install": False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

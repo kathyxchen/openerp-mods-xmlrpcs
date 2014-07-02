@@ -19,8 +19,8 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-import pooler
+from openerp.osv import fields, osv
+from openerp import pooler
 
 class res_partner(osv.osv):
     _description='partner'
@@ -35,7 +35,7 @@ res_partner()
 class res_partner_payarch(osv.osv):
     _name='res.partner.payarch'
     _description='payment archive'
-    _order='date desc'
+    _order='date_rec desc, balance desc, inv_date desc'
     _columns={
         'date_rec': fields.date('Date Received'),
         'po_num': fields.char('PO #', size=200),
