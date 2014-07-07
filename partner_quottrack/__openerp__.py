@@ -22,8 +22,10 @@
     "version" : "1.0",
     "author" : "AAG",
     "category" : "Custom Module",
-    "depends" : ["base", "sale"],
+    # this module depends on base and sale--i add a field to the sales module to link some information to the quotation module.
+    "depends" : ["base", "sale"], 
     "description": 'Used to relate quotations with customers.',
+    # how the data will be displayed.
     "data" : ["quotation_view.xml"],
     "installable": True,
     "auto_install": False,

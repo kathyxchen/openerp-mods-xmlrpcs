@@ -18,15 +18,17 @@
 #
 ##############################################################################
 {
-    'name' : 'Partner Payment History',
-    'version' : '4.0',
+    'name' : 'Partner Payment History', # name of your module, search when you need to look it up for installation/updates
+    'version' : '4.0', 
     'author' : 'AAG',
-    'category' : 'Custom Module',
+    'category' : 'Custom Module', 
     'description' : """ Store customer payment archives """,
-    'depends' : ['base'],
-    'data' : ['partner_payment_view.xml'],
-    'installable': True,
-    'auto_install': False,
+    # dependencies--pretty much all modules ought to depend on base; add others if inheriting from them.
+    # you'll note in my python script that i do inherit res.partner, but that is a module inside of base so i don't need to include it.
+    'depends' : ['base'],  
+    'data' : ['partner_payment_view.xml'], # this is the xml view--how the form and tree views should look on the web client 
+    'installable': True, 
+    'auto_install': False, 
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
