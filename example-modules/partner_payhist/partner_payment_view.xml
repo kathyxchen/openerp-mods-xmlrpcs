@@ -1,0 +1,70 @@
+<!-- the XML file allows you to choose where you want to display and edit your information. -->
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!--
+        all of this is inside the Partner form
+        -->
+
+        <record id="view_partner_form_payment" model="ir.ui.view">
+            <field name="name">res.partner.payment.form</field>
+            <field name="model">res.partner</field>
+            <!-- form view just means you can type/edit inside of this -->
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_partner_form"/> <!-- need an inherit_id to display inside the Partner form -->
+            <field name="arch" type="xml">
+                <!-- I want it inside of the partner form "notebook", and for it to be a tab all to itself in there -->
+                <notebook position="inside"> 
+                    <page string="Customer Payment Archive"> <!-- has its own page -->
+                        <field colspan="4" name="payment_id" nolabel="1"/> <!-- 'payment_id' links the page to the form and tree views of the table I made -->
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <!-- this is the form view I made for my table, note there's no inherit_id -->
+        <!-- you have to press edit to get into form view -->
+        <record id="partner_payarch_form_view" model="ir.ui.view">
+            <field name="name">partner.payarch.form.view</field>
+            <field name="model">res.partner.payarch</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Customer Payment Archive">
+                    <!-- field names where you can enter your information -->
+                    <field name="date_rec"/>
+                    <separator colspan="4" string="Tracking Information"/>
+                    <field name="po_num"/>
+                    <field name="invoice"/>
+                    <field name="mo_date"/>
+                    <field name="inv_date"/>
+                    <separator colspan="4" string="Product"/>
+                    <field name="description"/>
+                    <newline/>
+                    <field name="balance"/>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree view essentially is the display, non-editable -->
+        <record id="partner_payarch_tree_view" model="ir.ui.view">
+            <field name="name">partner.payarch.tree.view</field>
+            <field name="model">res.partner.payarch</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <!-- the 'editable="top"' option I included just means I can edit information in-place right on the table, 
+                rather than enter a separate form view window. 
+                "top" implies that you can add new data from the top and it'll sort itself accordingly -->
+                <tree string="Customer Payment Archive" editable="top">
+                    <field name="date_rec"/>
+                    <field name="mo_date"/>
+                    <field name="po_num"/>
+                    <field name="inv_date"/>
+                    <field name="invoice"/>
+                    <field name="description"/>
+                    <field name="balance"/>
+                </tree> 
+            </field>
+        </record>
+
+    </data>
+</openerp>

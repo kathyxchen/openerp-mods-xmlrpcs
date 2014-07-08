@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- this view is a bit more complicated compared to partner_payment_view in the partner_payhist module, see that one
+            before moving on to this. --> 
+
+        <!-- this creates a Quotations menu option when looking at the Sales sidebar (hence why it is the parent). sequence
+        tells you how the options are ordered; you can look for the other options' sequence if you look into their module views -->
+        <menuitem action="action_partner_quot_tree" id="sales_quot_arch" parent="base.menu_sales" sequence="9"/>
+        
+        <!-- this record has type 'search' because it is essentially a search box, in which you can look for things based on 
+        the partner's name or the quotation number --> 
+        <record id="view_partner_quot_filter" model="ir.ui.view">
+            <field name="name">quot.select</field>
+            <field name="model">quotation.file</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Partner">
+                    <group>
+                        <field name="partner_id" string="Partner"/>
+                        <field name="name" string="Quotation #" />
+                    </group>
+                    <newline/>
+                    <!-- You can also group quotations based on partner and type -->
+                    <group expand="0" string="Group By...">
+                       <filter string="Partner" icon="terp-personal" domain="[]" context="{'group_by' : 'partner_id'}" />
+                       <filter string="Type" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by' : 'quot_type'}" />
+                   </group>
+                 </search>
+            </field>
+        </record>
+
+        <!-- this is how they will look when you view the table -->
+        <record id="view_partner_quot_tree" model="ir.ui.view">
+            <field name="name">quot.tree</field>
+            <field name="model">quotation.file</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Partner Quotations">
+                    <field name="partner_id"/>
+                    <field name="name"/>
+                    <field name="file"/>
+                    <field name="quot_type"/>
+                    <field name="date_iss"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- when you click on the menu option, it will bring up a window with the tree view you just made -->
+        <record id="action_partner_quot_tree" model="ir.actions.act_window">
+            <field name="name">Quotation Archive</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">quotation.file</field>
+            <field name="view_type">form</field> <!-- needs to be form view to allow for 'Create' button at top -->
+            <field name="view_id" ref="view_partner_quot_tree"/>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_partner_quot_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Quotation option added to OE7; this custom module isn't needed, use as simple example module.
+              </p>
+            </field>
+        </record>
+        
+        <!-- this is the form you can edit the information on -->
+        <record id="view_partner_quot_form1" model="ir.ui.view">
+            <field name="name">quot.form1</field>
+            <field name="model">quotation.file</field>
+            <field name="type">form</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="Quotation">
+                    <group colspan="4" col="6">
+                        <field name="partner_id" colspan="2"/>
+                        <newline />
+                        <separator colspan="4" string="Quotation Information"/>
+                        <newline />
+                        <field name="name"/>
+                        <field name="attach"/>
+                        <newline />
+                        <field name="quot_type"/>
+                        <field name="date_iss"/>
+                        <newline />
+                        <separator colspan="4"/>
+                        <newline />
+                        <field name="file"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- you can go to the form view window when editing a customer too -->
+        <record id="action_partner_quot_form" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">quotation.file</field>
+            <field name="view_type">form</field>
+            <field name="context">{"search_default_customer":1}</field>
+            <field name="search_view_id" ref="view_partner_quot_filter"/>
+        </record>
+
+        <!-- default tree view when you pull up the window -->
+        <record id="action_partner_quot_form_view1" model="ir.actions.act_window.view">
+            <field eval="10" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_partner_quot_tree"/>
+            <field name="act_window_id" ref="action_partner_quot_form"/>
+        </record>
+
+        
+        <record id="action_partner_quot_form_view2" model="ir.actions.act_window.view">
+            <field eval="20" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_partner_quot_form1"/>
+            <field name="act_window_id" ref="action_partner_quot_form"/>
+        </record>
+
+        <!-- this displays inside of the customer form view --> 
+        <record id="view_partner_quot" model="ir.ui.view">
+            <field name="name">res.partner.quot.form</field>
+            <field name="model">res.partner</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Quotation Archive">
+                        <field colspan="4" name="quotation_id" nolabel="1"/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>
