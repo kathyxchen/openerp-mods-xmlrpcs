@@ -23,6 +23,7 @@
                                 <field name="footprint" />
                                 <field name="manu_name" />
                                 <field name="qty_prod" />
+                                <field name="stock_notes" />
                             </group>
                         </group>
                     </xpath>

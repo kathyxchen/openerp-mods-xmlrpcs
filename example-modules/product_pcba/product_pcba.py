@@ -43,10 +43,11 @@ class product_product(osv.osv):
         'qty_board': fields.integer('Quantity Per Board'),
         'qty_prod': fields.integer('Production Quantity'),
         'vol_prod': fields.integer('Volume', help="Price will be based on this volume"),
-        'per_board': fields.function(_str_bd_price, string='Cost Per Board', type='char'),
-        'ext_price': fields.function(_str_ext_price, string='Extended Price', type='char'),
+        'per_board': fields.function(_str_bd_price, string='Cost Per Board', type='char', store=True),
+        'ext_price': fields.function(_str_ext_price, string='Extended Price', type='char', store=True),
         'deci_per_board': fields.function(_calculate_bd_price, type='float', store=True),
         'deci_ext_price': fields.function(_calculate_ext_price, type='float', store=True),
+        'stock_notes': fields.text('Notes'),
     }
 
 product_product()
