@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_product_form_pcba">
+            <field name="name">product.normal.form.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="/form/sheet/notebook/page[1]/group/group[1]/field[@name='list_price']" position="replace">
+                        <field digits="(10,4)" name="list_price" />
+                    </xpath>
+                    <xpath expr="/form/sheet/notebook/page[1]/field[@name='description']" position="before">
+                        <separator attrs="{'invisible':[('categ_id','!=', 3)]}" string="Component Details"/>
+                        <group attrs="{'invisible':[('categ_id','!=', 3)]}" name="pcba_traits">
+                            <group name="fst">
+                                <field name="vol_prod" />
+                                <field name="qty_board" />
+                                <field name="per_board" />
+                                <field name="ext_price" />
+                            </group>
+                            <group name="snd">
+                                <field name="footprint" />
+                                <field name="manu_name" />
+                                <field name="qty_prod" />
+                            </group>
+                        </group>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</openerp>
