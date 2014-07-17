@@ -7,28 +7,35 @@
             <field name="inherit_id" ref="product.product_normal_form_view" />
             <field name="arch" type="xml">
                 <data>
-                    <xpath expr="/form/sheet/notebook/page[1]/group/group[1]/field[@name='list_price']" position="replace">
-                        <field digits="(10,4)" name="list_price" />
-                    </xpath>
+                    <!--<xpath expr="/form/sheet/notebook/page[1]/group/group[1]/field[@name='list_price']" position="attributes">
+                        <attribute name="attrs">{'invisible':[('categ_id','=', 3)]}</attribute>
+                    </xpath>-->
                     <xpath expr="/form/sheet/notebook/page[1]/field[@name='description']" position="before">
-                        <separator attrs="{'invisible':[('categ_id','!=', 3)]}" string="Component Details"/>
-                        <group attrs="{'invisible':[('categ_id','!=', 3)]}" name="pcba_traits">
-                            <group name="fst">
-                                <field name="vol_prod" />
-                                <field name="qty_board" />
-                                <field name="per_board" />
-                                <field name="ext_price" />
-                            </group>
-                            <group name="snd">
-                                <field name="footprint" />
-                                <field name="manu_name" />
-                                <field name="qty_prod" />
-                                <field name="stock_notes" />
-                            </group>
+                        <separator string="Component Details"/>
+                        <p colspan="2" class="oe_edit_only">(Fields may only apply to materials purchased from suppliers.)</p>
+                        <group name="pcba_traits">
+                            <field name="footprint" />
+                            <field name="manu_name" />
+                            <field name="stock_notes" />
                         </group>
                     </xpath>
                 </data>
             </field>
         </record>
+
+        <record model="ir.ui.view" id="view_product_tree_pcba">
+            <field name="name">product.normal.tree.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="/tree/field[@name='lst_price']" position="attributes">
+                        <attribute name="attrs">{'invisible':[('lst_price','=',0)]}</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+
     </data>
 </openerp>

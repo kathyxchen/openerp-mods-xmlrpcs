@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_bom_form_pcb">
+            <field name="name">mrp.bom.form.inherit</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="/form/notebook/page[1]/field[@name='bom_lines']" position="before">
+                    	<p colspan="2" class="oe_edit_only">(Cells in gray will be automatically computed after pressing 'Save')</p>
+                    </xpath>
+                    <xpath expr="/form/notebook/page[1]/field/tree/field[@name='name']" position="after">
+                    	<field name="production"/>
+                    	<field name="vol_demanded"/>
+                    	<field name="unit_price"/>
+                    	<field name="per_board"/>
+                    	<field name="ext_price"/>
+                    	<field name="product_footprint"/>
+                    	<field name="product_manu"/>
+                    	<field name="product_description"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+	</data>
+</openerp>
